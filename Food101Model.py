@@ -46,11 +46,11 @@ dataset_dir = 'foodSG'   # dataset images should be unzipped here. they should b
 
 train_data_dir = 'foodSG/train' # not needed, but useful in future
 validation_data_dir = 'foodSG/test' # not needed, but useful in future
-nb_train_samples = 10000 # i.e. amount of images in foodsg/train folder
-nb_validation_samples = 1180 # i.e. amount of images in foodsg/test folder. should be n_classes*10
+nb_train_samples = 8967  # i.e. amount of images in foodsg/train folder
+nb_validation_samples = 2212 # i.e. amount of images in foodsg/test folder. should be n_classes*10
 
 
-batch_size = 2  # higher values = faster training, but more memory needed
+batch_size = 16  # higher values = faster training, but more memory needed
 # recommended batch size values are 16, 32, 64, 128, 256
 
 EPOCHS = 20     # more epochs = better accuracy, but will plateau eventually
@@ -133,29 +133,6 @@ history = model.fit_generator(train_generator,
                     epochs=EPOCHS,
                     verbose=1,
                     callbacks=[csv_logger, checkpointer])
-
-# plotting after training
-
-acc = history.history['acc']
-val_acc = history.history['val_acc']
-loss = history.history['loss']
-val_loss = history.history['val_loss']
-
-epochs_x = range(len(acc))
-
-plt.plot(epochs_x, acc, 'bo', label='Training acc')
-plt.plot(epochs_x, val_acc, 'b', label='Validation acc')
-plt.title('Training and validation accuracy')
-plt.legend()
-
-plt.figure()
-
-plt.plot(epochs_x, loss, 'bo', label='Training loss')
-plt.plot(epochs_x, val_loss, 'b', label='Validation loss')
-plt.title('Training and validation loss')
-plt.legend()
-
-plt.show()
 
 model.save('MN_model_trained.h5')
 
