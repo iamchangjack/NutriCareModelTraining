@@ -25,21 +25,23 @@ def create_foodlist(path):
 # loading the model that was trained and fine-tuned
 MN_model = load_model('MN_model_trained.h5', compile = False)
 MN_colab_model = load_model('MN_colab_model.h5', compile = False)
+EN_model = load_model('EN_Model.h5', compile = False)
 
-food_list = create_foodlist("meta.txt")
+food_list = create_foodlist("meta_EFN.txt")
 
 def predict_class(model, images, size, show = True):
   for img in images:
 
     img_name = img
 
-    img = image.load_img(img, target_size=(size, size))
+    img = image.load_img(img, target_size=size)
     img = image.img_to_array(img)                    
     img = np.expand_dims(img, axis=0)         
-    img /= 255.                                      
+    img /= 255.
 
     pred = model.predict(img)
-    index = np.argmax(pred)    # Returns the indices of the maximum values along an axis, In case of multiple occurrences of the maximum values, the indices corresponding to the first occurrence are returned.
+    index = np.argmax(
+        pred)  # Returns the indices of the maximum values along an axis, In case of multiple occurrences of the maximum values, the indices corresponding to the first occurrence are returned.
     food_list.sort()
     pred_value = food_list[index]
 
@@ -64,7 +66,7 @@ def predict_class(model, images, size, show = True):
         print("Image appears to be - " + pred_value)
         plt.show()
 
-image1 = 'lor_mee.jpg'      # replace with whichever file name of the food you want to detect.
+image1 = 'fried_chicken.jpg'      # replace with whichever file name of the food you want to detect.
 image2 = 'kway_chap.jpg'
 image3 = 'fried_rice.jpg'
 image4 = 'murtabak.jpg'
@@ -79,15 +81,15 @@ images.append(image5)
 
 print("Predicting using MobileNetV2")
 
-predict_class(MN_model, images, 299, True)
+#predict_class(MN_model, images, (299, 299), True)
 
 print("Predicting using EfficientNetB2")
 
-predict_class(MN_colab_model, images, 299, True)
+predict_class(EN_model, images, (224, 306), True)
 
 # trying different syntax to get results
 
-img = tf.keras.preprocessing.image.load_img(image1, target_size=(299,299))
+img = tf.keras.preprocessing.image.load_img(image1, target_size=(255,255))
 input_arr = keras.preprocessing.image.img_to_array(img)
 input_arr = np.array([input_arr])  # Convert single image to a batch.
 predictions = MN_model.predict(input_arr)
