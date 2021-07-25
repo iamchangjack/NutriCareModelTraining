@@ -117,7 +117,7 @@ if os.path.isdir(store_path):
     shutil.rmtree(store_path)
 
 os.mkdir(store_path)
-img_path = 'test images/char_siew_rice.jpg'
+img_path = 'test images/cake.jpg'
 img = cv2.imread(img_path)
 split = os.path.split(img_path)
 file_name = split[1]
@@ -127,7 +127,8 @@ dst_path = os.path.join(store_path, full_name)
 cv2.imwrite(dst_path, img)
 
 csv_path = 'class_dict_foodsg.csv'  # path to class_dict.csv
-model_path = 'EN_model_colab_prefinetune.hdf5'  # path to the trained model
+#model_path = 'NutriCareModel_18_07.h5'  # path to the trained model
+model_path = 'NutriCareModel_18_07.h5'  # path to the trained model
 
 # run the classifier and retrieve top 5 results
 # top 5 results is in the form of a food name array and probability array
